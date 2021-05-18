@@ -104,8 +104,11 @@ void SelectionSort(int a[],int l,int r){
 }
 //Count Sort
 void CountSort(int arr[],int n){
-    int maxElement=5;
-    int count[maxElement+1];
+    int maxElement=6;
+    int count[maxElement];
+    for(int i=0;i<maxElement;i++){
+        count[i]=0;
+    }
     for(int i=0;i<n;i++){
         count[arr[i]]++;
     }
@@ -152,7 +155,7 @@ void WaveSort(int arr[],int n){
     }
 }
 int main(){
-    int a[]={5,2,3,4,1,9};
+    int a[]={5,2,3,4,1,1};
     int n=6;
     int b[]={1,0,0,1,2,2,1,0,2,1};
     int m=10;
