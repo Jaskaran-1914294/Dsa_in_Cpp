@@ -220,6 +220,7 @@ int isFoundAt(node*head1,node*head2){
    }
    return -1;
 }
+//for circular Linked list we just have to make next poiter of tail ==head
 int main(){
 // node*head=NULL;
 // insert(head,1);
