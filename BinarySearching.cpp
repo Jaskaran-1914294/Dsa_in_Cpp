@@ -61,11 +61,45 @@ int firstOccurence(int a[],int n,int key){
     }
     return ans;
 }
+//Fast Square root
+float squareRoot(int n){
+    int s=0;
+    int e=n;
+    float ans=-1;
+    while(s<=e){
+        int mid=(s+e)/2;
+        if(mid*mid==n){
+            ans=mid;
+            break;
+        }
+        else if(mid*mid<n){
+            ans=mid;
+            s=mid+1;
+        }
+        else{
+            e=mid-1;
+        }
+    }
+    float inc=0.1;
+    //Set your precision here
+    int precision=6;
+    for(int i=1;i<=precision;i++){
+        while(ans*ans<=n){
+            ans+=inc;
+        }
+        ans-=inc;
+        inc/=10;
+    }
+    return ans;
+}
+
 int main(){
     int a[]={1,2,3,4,4,4,7,8};
     int n=sizeof(a)/sizeof(a[0]);
     int key=4;
     cout<<firstOccurence(a,n,key)<<endl;
     cout<<NumberOfOccurence(a,n,key)<<endl;
-
+    cout<<squareRoot(15)<<endl;
+    cout<<squareRoot(5)<<endl;
+    cout<<squareRoot(81)<<endl;
 }
