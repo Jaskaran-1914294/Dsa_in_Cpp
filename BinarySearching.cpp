@@ -61,7 +61,7 @@ int firstOccurence(int a[],int n,int key){
     }
     return ans;
 }
-//Fast Square root
+//Fast Square root: EASY
 float squareRoot(int n){
     int s=0;
     int e=n;
@@ -92,14 +92,100 @@ float squareRoot(int n){
     }
     return ans;
 }
-
+//Aggressive Cows Question: EASY-MEDIUM 
+bool canWePlaceCows(int stalls[],int cows,int n,int minDis){
+    int lastCow=stalls[0];
+    int count=1;
+    for(int i=1;i<n;i++){
+        if(stalls[i]-lastCow>=minDis){
+            lastCow=stalls[i];
+            count++;
+            if(count==cows){
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+int AggressiveCows(int stalls[],int n,int cows){
+    sort(stalls,stalls+n);
+    int s=0;
+    int e=stalls[n-1]-stalls[0];
+    int ans=-1;
+    while(s<=e){
+        int mid=(s+e)/2;
+        if(canWePlaceCows(stalls,cows,n,mid)){
+            ans=mid;
+            s=mid+1;
+        }
+        else{
+            e=mid-1;
+        }
+    }
+    return ans;
+}
+//Books Allocation Question 
+bool canWeGiveBooks(int b[],int n,int students,int maxPerStudent){
+    int total=0;
+    int cnt=1;
+    for(int i=0;i<n;i++){
+        // Total += b[i] (which is hard to remember)
+        if(total+b[i]>maxPerStudent){
+            cnt++;
+            total=b[i];
+            if(cnt>students){
+                return 0;
+            }
+        }
+        // I am forgetting to add this statements 
+        else{
+            total+=b[i];
+        }
+    }
+    return 1;
+}
+int BooksAllocation(int books[],int n,int students){
+    sort(books,books+n);
+    int s=books[n-1];
+    int e=0;
+    for(int i=0;i<n;i++){
+        e+=books[i];
+    }
+    int ans=-1;
+    while(s<=e){
+        int mid =(s+e)/2;
+        if(canWeGiveBooks(books,n,students,mid)){
+            ans=mid;
+            e=mid-1;
+        }
+        else{
+            s=mid+1;
+        }
+    }
+    return ans;
+}
 int main(){
-    int a[]={1,2,3,4,4,4,7,8};
-    int n=sizeof(a)/sizeof(a[0]);
-    int key=4;
-    cout<<firstOccurence(a,n,key)<<endl;
-    cout<<NumberOfOccurence(a,n,key)<<endl;
-    cout<<squareRoot(15)<<endl;
-    cout<<squareRoot(5)<<endl;
-    cout<<squareRoot(81)<<endl;
+    // int a[]={1,2,3,4,4,4,7,8};
+    // int n=sizeof(a)/sizeof(a[0]);
+    // int key=4;
+    // cout<<firstOccurence(a,n,key)<<endl;
+    // cout<<NumberOfOccurence(a,n,key)<<endl;
+    // cout<<squareRoot(15)<<endl;
+    // cout<<squareRoot(5)<<endl;
+    // cout<<squareRoot(81)<<endl;
+
+    // int a[]={1,0,1,1,1};
+    // int n=5;
+    // int key=0;
+    // cout<<findKey(a,n,key)<<endl;
+
+    // int stalls[]={1,3,4,5,6,8};
+    // int length=sizeof(stalls)/sizeof(int);
+    // int cows=3;
+    // cout<<AggressiveCows(stalls,length,cows)<<endl;
+
+    int books[]={10,20,30,40};
+    int n=4;
+    int students=2;
+    cout<<BooksAllocation(books,n,students)<<endl;
 }
