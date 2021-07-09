@@ -35,11 +35,48 @@ int Prata(int a[],int n,int need){
         }
     }
 }
-
+//EKO problem- trees cutting SPOJ
+bool CanWeCutThis(int heights[],int n,int req,int done){
+    int total=0;
+	for(int i=0;i<n;i++){
+		if(heights[i]>done){
+			total+=heights[i]-done;
+			if(total>=req){
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+int EKOeko(int heights[],int n,int req){
+    sort(heights,heights+n);
+    int s=0;
+    int e=0;
+    int ans=-1;
+    for(int i=0;i<n;i++){
+        e+=heights[i];
+    }
+    while(s<=e){
+        int mid=(s+e)/2;
+        if(CanWeCutThis(heights,n,req,mid)){
+            ans=mid;
+            s=mid+1;
+        }
+        else{
+            e=mid-1;
+        }
+    }
+    return ans;
+}
 
 int main(){
-    int n=4;
-    int ranks[]={1,2,3,4};
-    int need=10;
-    cout<<Prata(ranks,n,need)<<endl;
+    // int n=4;
+    // int ranks[]={1,2,3,4};
+    // int need=10;
+    // cout<<Prata(ranks,n,need)<<endl;
+    
+    int heights[]={4,42,40,26,46};
+    int n=5;
+    int req=20;
+    cout<<EKOeko(heights,n,req)<<endl;
 }
