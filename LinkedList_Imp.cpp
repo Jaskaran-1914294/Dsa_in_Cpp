@@ -73,6 +73,22 @@ node* reverseK(node*&head,int k){
     return prev;
 
 }
+//Merge 2 sorted linked list
+node* merge(node*a,node*b){
+    if(a==NULL and b==NULL)return NULL;
+    if(a==NULL)return b;
+    if(b==NULL)return a;
+    node*ans=NULL;
+    if(a->data<b->data){
+        ans=a;
+        ans->next=merge(a->next,b);
+    }
+    else{
+        ans=b;
+        ans->next=merge(a,b->next);
+    }
+    return ans;
+}
 //Creation of a loop 
 void createLoop(node*head,int pos){
     int count=1;
