@@ -100,6 +100,40 @@ class StackUsingLL{
         return size;
     }
 };
+
+class MinMaxStacks{
+	vector<int>s;
+	vector<int>min_stack;
+	vector<int>max_stack;
+public:
+	MinMaxStacks(){
+	}
+	void push(int a){
+		s.push_back(a);
+		if(!min_stack.size() and !max_stack.size()){
+			min_stack.push_back(a);
+			max_stack.push_back(a);
+			return;
+		}
+		//Place the element only when its greater and smaller than needed
+		//Else placethe prev. element of stacks
+		int curr_min=min_stack[min_stack.size()-1];
+		int curr_max=max_stack[min_stack.size()-1];
+		min_stack.push_back(min(curr_min,a));
+		max_stack.push_back(max(curr_max,a));
+	}
+	void pop(){
+		min_stack.pop_back();
+		max_stack.pop_back();
+		s.pop_back();
+	}
+	int getMax(){
+		return max_stack[max_stack.size()-1];
+	}
+	int getMin(){
+		return min_stack[min_stack.size()-1];
+	}
+};
  
 //Stock Span Problem
 void StockSpan(vector<int>a,int n,vector<int>&span){
@@ -154,6 +188,22 @@ int LargestAreaUnderHistogram(vector<int>a,int n){
     }
     return ans;
 }
+//Reversing a stack from a helper stack
+void reverse(stack<int>&a,stack<int>&b){
+    if(a.empty())return;
+    int top=a.top();
+    a.pop();
+    while(!a.empty()){
+        b.push(a.top());
+        a.pop();
+    }
+    reverse(b,a);
+    a.push(top);
+    while(!b.empty()){
+        a.push(b.top());
+        b.pop();
+    }
+}
 int main(){
     // StackUsingArray<int> a;
     // a.push(12321);
@@ -200,8 +250,28 @@ int main(){
     }
 
 	cout<<LargestAreaUnderHistogram(v,m)<<endl;
+    cout<<"MIN MAX STACKS:-"<<endl;
+    MinMaxStacks ms;
+    ms.push(1);
+    ms.push(5);
+    ms.push(6);
+    cout<<ms.getMax()<<" "<<ms.getMin()<<endl;
+    ms.pop();
+    cout<<ms.getMax()<<" "<<ms.getMin()<<endl;
+    
 
-
-
+    cout<<"Reversing stack with helper"<<endl;
+    stack<int>st;
+    stack<int>helper;
+    st.push(1);
+    st.push(2);
+    st.push(3);
+    st.push(4);
+    st.push(5);
+    reverse(st,helper);
+    while(!st.empty()){
+        cout<<st.top()<<endl;
+        st.pop();
+    }
     return 0;
 }
